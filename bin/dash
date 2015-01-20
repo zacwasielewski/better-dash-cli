@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require 'optparse'
+require 'better_dash_cli'
+
+params = {}
+parser = OptionParser.new 
+
+dashcmd = BetterDashCli::CommandBuilder.command_from_options parser.parse(ARGV)
+
+puts ["open", dashcmd].join(' ')
+system "open", dashcmd
+
