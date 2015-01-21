@@ -1,5 +1,7 @@
 # Better Dash CLI
 
+[![Code Climate](https://codeclimate.com/github/zacwasielewski/better-dash-cli/badges/gpa.svg)](https://codeclimate.com/github/zacwasielewski/better-dash-cli)
+
 [Dash for Mac](http://kapeli.com/dash) is great, but its Terminal integration syntax is
 awkward. For example, to look up Ruby's `to_json` method, you'd have to remember this format:
 
