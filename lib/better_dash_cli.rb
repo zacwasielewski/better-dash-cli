@@ -2,11 +2,9 @@ require "ostruct"
 require "better_dash_cli/version"
 
 module BetterDashCli
-  
   class ArgumentParser
     
-    def self.parse(args)
-      
+    def self.parse(args)      
       options = OpenStruct.new
       options.language = nil
       options.keyword  = nil
@@ -49,6 +47,5 @@ module BetterDashCli
       command
     end
     
-  end
-  
+  end  
 end
