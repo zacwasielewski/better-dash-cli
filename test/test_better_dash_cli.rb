@@ -4,38 +4,54 @@ require 'better_dash_cli'
 
 module BetterDashCli
   
-  class ArgumentParserTest < Minitest::Test    
-    def test_nil_arguments
+  class ArgumentParserTest < Minitest::Test
+    def test_validating_nil_arguments
       assert_raises ArgumentError do
-        BetterDashCli::ArgumentParser.parse
+        BetterDashCli::ArgumentParser.validate!
       end
     end
 
-    def test_zero_arguments
-      args = []
+    def test_validating_zero_arguments
       assert_raises ArgumentError do
-        BetterDashCli::ArgumentParser.parse(args)
+        BetterDashCli::ArgumentParser.validate!([])
       end
     end
 
-    def test_one_argument
+    def test_validating_one_argument
+      args = %w"get_the_excerpt"
+      assert_equal true, BetterDashCli::ArgumentParser.validate!(args)
+    end
+
+    def test_validating_two_arguments
+      args = %w"wordpress get_the_excerpt"
+      assert_equal true, BetterDashCli::ArgumentParser.validate!(args)
+    end
+
+    def test_validating_too_many_arguments
+      args = %w"wordpress get_the_excerpt foo bar"
+      assert_raises ArgumentError do
+        BetterDashCli::ArgumentParser.validate!(args)
+      end
+    end
+    
+    def test_parsing_one_argument
       args = %w"get_the_excerpt"
       expected = OpenStruct.new(:language => nil, :keyword => 'get_the_excerpt')
       assert_equal expected, BetterDashCli::ArgumentParser.parse(args)
     end
 
-    def test_two_arguments
+    def test_parsing_two_arguments
       args = %w"wordpress get_the_excerpt"
       expected = OpenStruct.new(:language => 'wordpress', :keyword => 'get_the_excerpt')
       assert_equal expected, BetterDashCli::ArgumentParser.parse(args)
     end
-  
-    def test_more_than_two_arguments
+    
+    def test_parsing_wrong_number_of_arguments
       args = %w"wordpress get_the_excerpt foo bar"
-      assert_raises ArgumentError do
-        BetterDashCli::ArgumentParser.parse(args)
-      end
+      expected = OpenStruct.new(:language => nil, :keyword => nil)
+      assert_equal expected, BetterDashCli::ArgumentParser.parse(args)
     end
+  
   end
 
   class DashTest < Minitest::Test
